@@ -38,9 +38,11 @@ you may define AWS_KEY_ID and AWS_SECRET_ACCESS_KEY as environmental variables.
     perl render.pl -i file [-o directory] [-c directory] [-s speeds] [-p pitch] [-pr]
                    [-m max processes] [-z 1] [-rr 1] [--test] [-l word limit]
                    [--norepeat] [--nospoken] [--nocourtesytone] [-e NEURAL | STANDARD] 
-                   [--sm] [--ss] [--sv] [-x] [--lang ENGLISH | SWEDISH]
+                   [--sm] [--ss] [--sv] [-x] [--lang ENGLISH | SWEDISH | ROMANIAN]
 
 Uses AWS Polly and requires valid credentials in the aws.properties file.<br/><br/>
+
+For `-l ROMANIAN`, remember to use `-e STANDARD`. Neural languages do not sound as rough as standard ones.
 
 #### OPTIONS:
 

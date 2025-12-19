@@ -117,6 +117,9 @@ else:
     if language == "GERMAN":
         voice_id = "Vicki"
 
+    if language == "ROMANIAN":
+        voice_id = "Carmen"
+
     print("Using Voice: " + voice_id)
     cache_filename = cache_directory + language + "-standard-" + base_filename
     render(cache_filename, voice_id=voice_id, text_type=None, text=sentence)

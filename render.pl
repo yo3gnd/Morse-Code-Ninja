@@ -12,6 +12,7 @@ use File::Spec;
 use Getopt::Long;
 use Digest::SHA qw(sha256_hex sha256_base64);
 use POSIX;
+use Encode qw(encode_utf8);
 
 my @speeds;
 sub print_usage;
@@ -62,7 +63,8 @@ my @random_tones = (500, 550, 600, 650, 700, 750, 800, 850, 900);
 
 # set default value for speeds here as it is too complex to do it inside the GetOptions call above
 my $speedSize = @speeds;
-@speeds = ($speedSize > 0) ? @speeds : ("15", "17", "20", "22", "25", "28", "30", "35", "40", "45", "50");
+ @speeds = ($speedSize > 0) ? @speeds : ("15", "17", "20", "22", "25", "28", "30", "32", "35", "40", "45", "50");
+#@speeds = ($speedSize > 0) ? @speeds : ("15", "20");
 
 if (! -d "$output_directory") {
   mkdir "$output_directory";
@@ -82,6 +84,10 @@ if($lang eq "SWEDISH") {
 if($lang eq "GERMAN") {
   $lower_lang_chars_regex = "a-züäöß";
   $upper_lang_chars_regex = "A-ZÜÄÖß";
+}
+if($lang eq "ROMANIAN") {
+  $lower_lang_chars_regex = "a-zâăîșț";
+  $upper_lang_chars_regex = "A-ZÂĂÎȘȚ";
 }
 
 binmode(STDOUT, ":encoding(UTF-8)");
@@ -408,7 +414,8 @@ foreach(@sentences) {
         $cached_filename = "${lang}-standard-";
       }
 
-      $cached_filename .= $text_to_speech_engine . "-" . sha256_hex($sentence) . ".mp3";
+      use Encode qw(encode_utf8);
+      $cached_filename .= $text_to_speech_engine . "-" . sha256_hex(encode_utf8($sentence)) . ".mp3";
       $cached_filename = $cache_directory . $cached_filename;
 
       return $cached_filename;
@@ -581,7 +588,8 @@ foreach(@sentences) {
             sub get_cached_filename {
               my ($ebookCmdBase, $morse_text) = @_;
 
-              my $cached_file_hash = sha256_base64($ebookCmdBase . $morse_text);
+	      use Encode qw(encode_utf8);
+	      my $cached_file_hash = sha256_base64(encode_utf8($ebookCmdBase . $morse_text));
               $cached_file_hash =~ s/\///g;
               my $cached_file = $cached_file_hash . ".mp3";
 
