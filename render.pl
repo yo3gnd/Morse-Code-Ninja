@@ -63,8 +63,7 @@ my @random_tones = (500, 550, 600, 650, 700, 750, 800, 850, 900);
 
 # set default value for speeds here as it is too complex to do it inside the GetOptions call above
 my $speedSize = @speeds;
- @speeds = ($speedSize > 0) ? @speeds : ("15", "17", "20", "22", "25", "28", "30", "32", "35", "40", "45", "50");
-#@speeds = ($speedSize > 0) ? @speeds : ("15", "20");
+@speeds = ($speedSize > 0) ? @speeds : ("15", "17", "20", "22", "25", "28", "30", "35", "40", "45", "50");
 
 if (! -d "$output_directory") {
   mkdir "$output_directory";
